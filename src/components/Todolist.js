@@ -11,12 +11,10 @@ function TodoList() {
     }
 
     const newTodos = [...todos,todo];
-
-    // setting the state to the localstorage.
-
-    localStorage.setItem('todos', JSON.stringify(newTodos));
+    
     setTodos(newTodos);
     console.log(...todos);
+
   };
 
   const updateTodo = (todoId, newValue) => {
@@ -24,23 +22,16 @@ function TodoList() {
       return;
     }
 
-    const updated = todos.map(item => (item.id === todoId ? newValue : item))
-    
-    // setting the state to the localstorage after updating.
+    setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
 
-    localStorage.setItem('todos', JSON.stringify(updated));
-    setTodos(updated);
 
   };
 
   const removeTodo = id => {
     const removedArr = [...todos].filter(todo => todo.id !== id);
 
-    // setting the state to the localstorage. 
 
-    localStorage.setItem('todos', JSON.stringify(removedArr));
     setTodos(removedArr);
-
   };
 
   const completeTodo = id => {
@@ -51,16 +42,9 @@ function TodoList() {
       return todo;
     });
     setTodos(updatedTodos);
-
   };
 
-  useEffect(() => {
 
-    // getting data from local storage and setting it to state named todos
-    
-    const data = JSON.parse(localStorage.getItem("todos"))
-    setTodos(data)
-  }, [])
   return (
     <>
       <h1>What's the Plan for Today?</h1>
